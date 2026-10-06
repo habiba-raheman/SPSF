@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillFinder - Student Skills &amp; Project Finder</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="navbar">
+  <div class="logo">&#9889; SkillFinder</div>
+  <button class="menu-btn" onclick="toggleMenu()">&#9776;</button>
+  <nav id="nav">
+    <a onclick="show('home')">Home</a>
+    <a onclick="show('dashboard')">Dashboard</a>
+    <a onclick="show('projects')">Find Projects</a>
+    <a onclick="show('teammates')">Find Teammates</a>
+    <a onclick="show('post')">Post Project</a>
+    <a onclick="show('profile')">My Profile</a>
+  </nav>
+</header>
+<div id="toast"></div>
+
+<main>
+<!-- HOME -->
+<section id="page-home" class="page">
+  <div class="hero">
+    <h1>Find the Right Skills.<br>Build the Right Team.</h1>
+    <p>Discover projects, find teammates, and build better teams based on your skills and interests.</p>
+    <button class="btn" onclick="show('projects')">Find Projects</button>
+    <button class="btn light" onclick="show('teammates')">Find Teammates</button>
+  </div>
+  <p class="center">SkillFinder helps students who are stuck finding teammates. Create a profile with your skills, and we compare it with project requirements using a simple formula: matched skills &divide; required skills &times; 100.</p>
+  <div class="grid">
+    <div class="card"><h3>&#127919; Skill-Based Matching</h3><p>See your match percentage for every project and which skills you are missing.</p></div>
+    <div class="card"><h3>&#128269; Project Discovery</h3><p>Filter projects by domain, difficulty, skill and type.</p></div>
+    <div class="card"><h3>&#128101; Team Formation</h3><p>Post your project and find students ranked by skill match.</p></div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="page-dashboard" class="page hidden"><div id="dashboard-content"></div></section>
+
+<!-- FIND PROJECTS -->
+<section id="page-projects" class="page hidden">
+  <h2>Find Projects</h2>
+  <div class="filters">
+    <input id="p-search" placeholder="Search title, domain, skill..." oninput="renderProjects()">
+    <select id="p-domain" onchange="renderProjects()"></select>
+    <select id="p-diff" onchange="renderProjects()"><option value="">All Difficulty</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+    <select id="p-skill" onchange="renderProjects()"></select>
+    <select id="p-type" onchange="renderProjects()"><option value="">All Types</option><option>Academic Project</option><option>Mini Project</option><option>Hackathon</option><option>Personal Project</option><option>Open Source</option></select>
+  </div>
+  <div id="project-list" class="grid"></div>
+</section>
+
+<!-- FIND TEAMMATES -->
+<section id="page-teammates" class="page hidden">
+  <h2>Find Teammates</h2>
+  <div class="card">
+    <p><b>Required skills (click to select):</b></p>
+    <div id="t-skills" class="chips"></div>
+    <div class="filters">
+      <input id="t-search" placeholder="Search name, bio, role..." oninput="renderTeammates()">
+      <select id="t-domain" onchange="renderTeammates()"></select>
+      <select id="t-year" onchange="renderTeammates()"><option value="">Any Year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+    </div>
+  </div>
+  <div id="student-list" class="grid"></div>
+</section>
+
+<!-- POST PROJECT -->
+<section id="page-post" class="page hidden">
+  <h2>Post a Project</h2>
+  <div class="card form">
+    <label>Project Title</label><input id="pp-title">
+    <label>Description</label><textarea id="pp-desc" rows="3"></textarea>
+    <label>Domain</label><select id="pp-domain"></select>
+    <label>Difficulty</label><select id="pp-diff"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+    <label>Project Type</label><select id="pp-type"><option>Academic Project</option><option>Mini Project</option><option>Hackathon</option><option>Personal Project</option><option>Open Source</option></select>
+    <label>Required Skills</label><div id="pp-skills" class="chips"></div>
+    <label>Team Size</label><input id="pp-size" type="number" min="2" value="4">
+    <label>Current Members</label><input id="pp-members" type="number" min="1" value="1">
+    <button class="btn" onclick="saveProject()">Post Project</button>
+  </div>
+</section>
+
+<!-- MY PROFILE -->
+<section id="page-profile" class="page hidden">
+  <h2>My Profile</h2>
+  <div class="card form">
+    <label>Full Name</label><input id="pr-name">
+    <label>College</label><input id="pr-college">
+    <label>Branch</label><input id="pr-branch" value="CSE">
+    <label>Year</label><select id="pr-year"><option>1st Year</option><option selected>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+    <label>Email</label><input id="pr-email" type="email">
+    <label>Short Bio</label><textarea id="pr-bio" rows="2"></textarea>
+    <label>Technical Skills</label><div id="pr-skills" class="chips"></div>
+    <label>Areas of Interest</label><div id="pr-interests" class="chips"></div>
+    <label>Previous Projects (comma separated)</label><input id="pr-prev">
+    <button class="btn" onclick="saveProfile()">Save Profile</button>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="page-project-details" class="page hidden"><div id="project-details"></div></section>
+<section id="page-student-details" class="page hidden"><div id="student-details"></div></section>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/matching.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
